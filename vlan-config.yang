@@ -1,0 +1,46 @@
+module vlan-config {
+  namespace "urn:group4:vlan-config";
+  prefix "vlan";
+
+  description "YANG model for VLAN configuration";
+
+  revision "2024-12-10" {
+    description "Initial revision for VLAN provisioning.";
+  }
+
+  container vlan-provisioning {
+    description "VLAN provisioning configuration container";
+
+    list switch {
+      key "switch-id";
+      description "A list of switches with VLAN configurations";
+
+      leaf switch-id {
+        type string;
+        description "Unique ID for the switch (e.g., openflow:1)";
+      }
+
+      list vlan {
+        key "vlan-id";
+        description "A list of VLAN configurations on the switch";
+
+        leaf vlan-id {
+          type uint16 {
+            range "1..4094";
+          }
+          description "The VLAN ID (1-4094)";
+        }
+
+        list port {
+          key "port-id";
+          description "List of ports in this VLAN";
+
+          leaf port-id {
+            type uint32;
+            description "Port number associated with this VLAN";
+          }
+        }
+      }
+    }
+  }
+}
