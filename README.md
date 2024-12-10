@@ -14,3 +14,19 @@ Or there could be a limit to the device amount in a VLAN, where the system would
 There is a provided example using YANG data models to configure the VLAN. However, at the time of writing it is not incorporated in OpenDaylight and therefore does not work.
 
 The PDF of the report can also be seen in this git repo.
+
+
+
+## Commands for running example:
+
+```bash
+# Run OpenDaylight (via docker or VM). Should be accessible at "localhost" or update the OpenDaylight URL in the code
+python alternating_vlan_provisioning.py
+# Wait for consecutive "No hosts detected..." without any error messages. This indicates that OpenDaylight is fully up and running
+# Start mininet emulation with docker this can be done with the following command, given that the container is called "mininet" and there is a topology file called "topo-3sw-4host.py"
+docker exec -it mininet sudo mn --custom topo-3sw-4host.py --topo mytopo --mac --controller=remote,ip=172.18.0.2,port=6633 --switch=ovsk,protocols=OpenFlow13
+#Docker containers for OpenDaylight and mininet are available at https://gitlab.com/mathieu_stenzel/skku_esw7002-41/-/tree/main
+# After starting mininet, the system will output whether it succeeded in installing the flow rules and the traffic can also be seen using Wireshark
+```
+
+A demo can also be seen on youtube: https://youtu.be/jx6c-KlLBJs
